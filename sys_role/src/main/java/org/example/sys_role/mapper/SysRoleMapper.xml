@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.example.sys_role.mapper.SysRoleMapper">
+    <insert id="add" parameterType="org.example.sys_role.entity.SysRole">
+        insert into sys_role
+            (roleId, roleName, addWho, addTime)
+        values
+            (#{roleId}, #{roleName}, #{addWho}, #{addTime})
+    </insert>
+</mapper>

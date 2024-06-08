@@ -1,0 +1,19 @@
+server:
+  port: 8020
+
+spring:
+  application:
+    name: sys-user  #微服务名称
+  profiles:
+    active: dev
+  #配置nacos注册中心地址
+  cloud:
+    nacos:
+      config:
+        file-extension: yml
+        server-addr: 192.168.31.246:8848,192.168.31.246:8850,192.168.31.246:8852
+        namespace: 59f707f4-1c65-406d-bc22-fe6802c5d54b
+        #        group: tulingshop
+        #        cluster-name: SH
+        username: nacos
+        password: nacos

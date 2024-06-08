@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.example.sys_user.dao.SysUserMapper">
+    <insert id="add" parameterType="org.example.sys_user.entity.SysUser">
+        insert into sys_user
+            (userName, nickName, password, roleId, addWho, addTime)
+        values
+            (#{userName}, #{nickName}, #{password}, 1, #{addWho}, #{addTime})
+    </insert>
+    <update id="setRole">
+        update sys_user
+        set roleId = #{roleId}, checkWho = #{checkWho},
+            editWho = #{checkWho}, editTime = now()
+        where userName = #{userName}
+    </update>
+</mapper>
