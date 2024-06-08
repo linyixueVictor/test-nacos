@@ -13,6 +13,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
+@Enable
 @EnableWebSecurity
 public class WebsecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
