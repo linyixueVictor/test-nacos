@@ -17,9 +17,14 @@ public class SysUserServiceImpl implements SysUserService {
     SysUserMapper mapper;
     @Autowired
     SysRoleFeign sysRoleFeign;
+    /*@Autowired
+    private RestTemplate restTemplate;*/
 
-    @Autowired
-    private RestTemplate restTemplate;
+    @Override
+    public void login(String userName, String password) {
+
+    }
+
     @Override
     public void add(SysUser sysUser) {
         SysUser sysUserOld = mapper.selectById(sysUser.getUserName());

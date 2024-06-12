@@ -6,6 +6,7 @@ public class Const {
             public static String ADD = "新增成功！";
             public static String SET = "设置成功！";
             public static String GET = "查询成功！";
+            public static String LOGIN = "登录成功！";
         }
         public static class SysRole {
             public static String ADD = "新增成功！";

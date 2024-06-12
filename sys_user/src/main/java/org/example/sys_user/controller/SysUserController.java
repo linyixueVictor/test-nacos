@@ -13,6 +13,20 @@ import org.springframework.web.bind.annotation.*;
 public class SysUserController {
     @Autowired
     SysUserService sysUserService;
+    @PostMapping("/login")
+    public R login(@RequestParam String userName, @RequestParam String password) {
+        try {
+            sysUserService.login(userName, password);
+            return R.ok(Const.SuccessMsg.SysUser.LOGIN);
+        } catch (CustomException e) {
+            e.printStackTrace();
+            return R.fail(e.getCode(), e.getMsg());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return R.error();
+        }
+    }
+
     @PostMapping("/register")
     public R add(@RequestBody SysUser sysUser) {
         try {

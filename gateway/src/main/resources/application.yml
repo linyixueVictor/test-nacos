@@ -31,4 +31,8 @@ spring:
           uri: lb://bas-sku
           predicates:
             - Path=/sku/**
+        - id: authcenter_route
+          uri: lb://oauth
+          predicates:
+            - Path=/sku/**
 

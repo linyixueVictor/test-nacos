@@ -1,36 +1,44 @@
 package org.example.security.service;
 
-import org.example.security.domain.TestUserDetails;
+import lombok.extern.slf4j.Slf4j;
 import org.example.security.entity.SysUser;
-import org.example.security.mapper.SysUserMapper;
+import org.example.security.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 
-@Component
+import java.util.ArrayList;
+import java.util.List;
+
+@Service
+@Slf4j
 public class TestUserDetailsService implements UserDetailsService {
     @Autowired
-    SysUserMapper mapper;
+    PasswordEncoder passwordEncoder;
+    @Autowired
+    UserMapper mapper;
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        if (StringUtils.isEmpty(username)) {
-            throw new UsernameNotFoundException("用户名不能为空！");
+        SysUser user = mapper.getUser(username);
+        if (user == null) {
+            log.warn("用户名不存在");
+            throw new UsernameNotFoundException("用户名不存在");
         }
-        SysUser sysUser = getUserByName(username);
-        if (sysUser == null) {
-            throw new UsernameNotFoundException("用户名不存在！");
+        List<GrantedAuthority> list = new ArrayList<>();
+        List<String> authorities = mapper.getAuthority(user.getRoleId());
+        if (authorities != null && !authorities.isEmpty()) {
+            for (String authority : authorities) {
+                GrantedAuthority grantedAuthority = new SimpleGrantedAuthority(authority);
+                list.add(grantedAuthority);
+            }
         }
-        return new TestUserDetails(sysUser);
-    }
-
-    public SysUser getUserByName(String userName) {
-        try {
-            return mapper.getUserByName(userName);
-        } catch (Exception e) {
-            throw new UsernameNotFoundException(e.getMessage());
-        }
+        return User.withUsername(username).password(passwordEncoder.encode(user.getPassword()))
+                .authorities(list).build();
     }
 }
