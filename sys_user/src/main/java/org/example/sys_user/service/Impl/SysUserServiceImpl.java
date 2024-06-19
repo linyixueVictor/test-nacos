@@ -81,18 +81,16 @@ public class SysUserServiceImpl implements SysUserService {
     public void setRole(String userName, Long roleId, String checkWho) {
         //OpenFeign远程调用
         R result = sysRoleFeign.getById(roleId);
-        if (!result.get("code").equals(200)) {
-            throw new CustomException(500, (String)result.get("msg"));
+        if (result.getCode() != 200) {
+            throw new CustomException(500, result.getMsg());
         }
-        if (result.get("code").equals(200)) {
-            try {
-                int rows = mapper.setRole(userName, roleId, checkWho);
-                if (rows == 0) {
-                    throw new CustomException(500, Const.ErrorMsg.SysUser.NOT_EXIST);
-                }
-            } catch (Exception e) {
-                throw new CustomException(500, Const.ErrorMsg.SysUser.SET, e.getMessage());
+        try {
+            int rows = mapper.setRole(userName, roleId, checkWho);
+            if (rows == 0) {
+                throw new CustomException(500, Const.ErrorMsg.SysUser.NOT_EXIST);
             }
+        } catch (Exception e) {
+            throw new CustomException(500, Const.ErrorMsg.SysUser.SET, e.getMessage());
         }
     }
 

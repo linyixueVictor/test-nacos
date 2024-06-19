@@ -1,8 +1,10 @@
 package org.example.common;
 
-import java.util.HashMap;
-import java.util.Map;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 
+@Data
+@AllArgsConstructor
 public class R<T> {
     private int code;
     private String msg;
@@ -11,12 +13,6 @@ public class R<T> {
     public R(int code, String msg) {
         this.code = code;
         this.msg = msg;
-    }
-
-    public R(int code, String msg, T data) {
-        this.code = code;
-        this.msg = msg;
-        this.data = data;
     }
 
     public static<T> R<T> error() {
@@ -33,13 +29,5 @@ public class R<T> {
 
     public static<T> R<T> ok(String msg, T data) {
         return new R<T>(200, msg, data);
-    }
-
-    public Object getData() {
-        return data;
-    }
-
-    public Integer getCode() {
-        return code;
     }
 }
