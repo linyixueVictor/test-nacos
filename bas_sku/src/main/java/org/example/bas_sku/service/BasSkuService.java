@@ -1,5 +1,7 @@
 package org.example.bas_sku.service;
 
+import org.example.bas_sku.model.BasSkuEntity;
+
 public interface BasSkuService {
-    Character getFlagById(String sku);
+    BasSkuEntity getById(String sku);
 }

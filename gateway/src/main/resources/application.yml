@@ -1,5 +1,5 @@
 server:
-  port: 8060
+  port: 8888
 
 spring:
   application:
@@ -32,7 +32,15 @@ spring:
           predicates:
             - Path=/sku/**
         - id: authcenter_route
-          uri: lb://oauth
+          uri: lb://authcenter
           predicates:
             - Path=/sku/**
-
+        - id: order_route
+          uri: lb://doc-order
+          predicates:
+            - Path=/order/**
+testnacos:
+  gateway:
+    shouldSkipUrls:
+      - /oauth/**
+      - /user/login

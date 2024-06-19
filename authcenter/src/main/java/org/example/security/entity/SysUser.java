@@ -7,7 +7,7 @@ import org.example.common.BaseEntity;
 @EqualsAndHashCode(callSuper = true)
 @Data
 public class SysUser extends BaseEntity {
-    private Long userName;
+    private String userName;
     private String nickName;
     private String password;
     private Character status;

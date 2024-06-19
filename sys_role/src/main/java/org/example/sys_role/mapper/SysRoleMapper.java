@@ -2,8 +2,7 @@ package org.example.sys_role.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
-import org.example.common.Const;
-import org.example.sys_role.entity.SysRole;
+import org.example.sys_role.model.SysRole;
 
 @Mapper
 public interface SysRoleMapper {

@@ -12,13 +12,12 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.R
 @Configuration
 @EnableResourceServer
 public class ResourceServiceConfig extends ResourceServerConfigurerAdapter {
-
     @Override
     public void configure(HttpSecurity http) throws Exception {
-
         http.authorizeRequests()
+                .antMatchers("/oauth/**").permitAll()
                 .anyRequest().authenticated()
-                .and().requestMatchers().antMatchers("/inv/**");
+                .and().csrf().disable();
 
     }
 }

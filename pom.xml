@@ -26,6 +26,16 @@
 		<!-- Spring Cloud 版本 -->
 		<spring-cloud.version>2021.0.4</spring-cloud.version>
 	</properties>
+	<modules>
+		<module>authcenter</module>
+		<module>bas_sku</module>
+		<module>common</module>
+		<module>doc_order</module>
+		<module>gateway</module>
+		<module>redis-common</module>
+		<module>sys_role</module>
+		<module>sys_user</module>
+	</modules>
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -69,6 +79,11 @@
 			<dependency>
 				<groupId>org.example</groupId>
 				<artifactId>common</artifactId>
+				<version>0.0.1-SNAPSHOT</version>
+			</dependency>
+			<dependency>
+				<groupId>org.example</groupId>
+				<artifactId>redis-common</artifactId>
 				<version>0.0.1-SNAPSHOT</version>
 			</dependency>
 		</dependencies>

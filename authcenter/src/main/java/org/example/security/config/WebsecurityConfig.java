@@ -16,25 +16,25 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Configuration
 @EnableWebSecurity
 public class WebsecurityConfig extends WebSecurityConfigurerAdapter {
-//    @Autowired
-//    private TestUserDetailsService userDetailService;
-//
-//    /*
-//     * 方法实现说明:用于构建用户认证组件,需要传递userDetailsService和密码加密器
-//     */
-//    @Override
-//    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-//        auth.userDetailsService(userDetailService).passwordEncoder(passwordEncoder());
-//    }
+    @Autowired
+    private TestUserDetailsService userDetailService;
+
+    /*
+     * 方法实现说明:用于构建用户认证组件,需要传递userDetailsService和密码加密器
+     */
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(userDetailService).passwordEncoder(passwordEncoder());
+    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.formLogin();
         http.authorizeRequests()
-                .antMatchers("/oauth/token").permitAll()
+                .antMatchers("/oauth/**").permitAll()
                 .anyRequest().authenticated()
-                .and().logout().permitAll();
-                //.and().csrf().disable();
+                .and().logout().permitAll()
+                .and().csrf().disable();
 
     }
 

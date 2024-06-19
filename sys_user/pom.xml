@@ -57,30 +57,32 @@
             <artifactId>spring-cloud-starter-openfeign</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>druid-spring-boot-starter</artifactId>
-            <version>1.2.16</version>
-        </dependency>
-
         <!-- mybatis自动配置依赖-->
         <dependency>
             <groupId>org.mybatis.spring.boot</groupId>
             <artifactId>mybatis-spring-boot-starter</artifactId>
             <version>2.2.2</version>
         </dependency>
-
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid-spring-boot-starter</artifactId>
+            <version>1.2.16</version>
+        </dependency>
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <scope>runtime</scope>
             <version>8.0.32</version>
         </dependency>
+
         <dependency>
             <groupId>org.example</groupId>
             <artifactId>common</artifactId>
         </dependency>
-
+        <dependency>
+            <groupId>org.example</groupId>
+            <artifactId>redis-common</artifactId>
+        </dependency>
     </dependencies>
 
     <build>

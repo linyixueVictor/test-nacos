@@ -1,8 +1,8 @@
 package org.example.sys_role.service.Impl;
 
 import org.example.common.Const;
-import org.example.common.CustomException;
-import org.example.sys_role.entity.SysRole;
+import org.example.common.exception.CustomException;
+import org.example.sys_role.model.SysRole;
 import org.example.sys_role.mapper.SysRoleMapper;
 import org.example.sys_role.service.SysRoleService;
 import org.springframework.beans.factory.annotation.Autowired;

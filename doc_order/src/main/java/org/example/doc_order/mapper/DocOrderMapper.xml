@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.example.doc_order.mapper.DocOrderMapper">
+    <insert id="addHeader" parameterType="org.example.doc_order.model.DocOrderEntity">
+        insert into doc_order_header
+            (orderNo, status, orderType, createTime, addTime, addWho)
+        values
+            (#{orderNo}, 0, #{orderType}, #{addTime}, #{addTime}, #{addWho})
+    </insert>
+    <insert id="addDetails" parameterType="org.example.doc_order.model.DocOrderDetails">
+        insert into doc_order_details
+            (orderNo, sku, status, qty, addTime, addWho)
+        values
+            (#{orderNo}, #{sku}, 0, #{qty}, #{addTime}, #{addWho})
+    </insert>
+    <select id="getOrderDetailsList" resultType="org.example.doc_order.model.DocOrderDetails">
+        select *
+        from doc_order_details
+        where orderNo = #{orderNo}
+        <if test="sku != null">
+            and sku = #{sku}
+        </if>
+        order by sku
+    </select>
+    <select id="getCreateStatusDetailsCount" resultType="java.lang.Integer">
+        select count(1)
+        from doc_order_details
+        where orderNo = #{orderNo}
+        and status = '0'
+    </select>
+    <update id="updateHeaderFirst">
+        update doc_order_header
+        set status = '1', firstOutTime = now()
+        where orderNo = #{orderNo}
+    </update>
+    <update id="updateHeaderLast">
+        update doc_order_header
+        set status = '2', lastOutTime = now()
+        where orderNo = #{orderNo}
+    </update>
+    <update id="updateDetailsStatus">
+        update doc_order_details
+        set status = '2', outWho = #{outWho}, outTime = now()
+        where orderNo = #{orderNo}
+        and sku = #{sku}
+    </update>
+</mapper>

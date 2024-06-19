@@ -1,12 +1,14 @@
 package org.example.sys_user.controller;
 
 import org.example.common.Const;
-import org.example.common.CustomException;
+import org.example.common.exception.CustomException;
 import org.example.common.R;
-import org.example.sys_user.entity.SysUser;
+import org.example.sys_user.model.SysUser;
 import org.example.sys_user.service.SysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 @RestController
 @RequestMapping("/user")
@@ -14,10 +16,10 @@ public class SysUserController {
     @Autowired
     SysUserService sysUserService;
     @PostMapping("/login")
-    public R login(@RequestParam String userName, @RequestParam String password) {
+    public R<Map<String, String>> login(@RequestParam String userName, @RequestParam String password) {
         try {
-            sysUserService.login(userName, password);
-            return R.ok(Const.SuccessMsg.SysUser.LOGIN);
+            Map<String, String> map = sysUserService.login(userName, password);
+            return R.ok(Const.SuccessMsg.SysUser.LOGIN, map);
         } catch (CustomException e) {
             e.printStackTrace();
             return R.fail(e.getCode(), e.getMsg());
@@ -28,7 +30,7 @@ public class SysUserController {
     }
 
     @PostMapping("/register")
-    public R add(@RequestBody SysUser sysUser) {
+    public R<Long> add(@RequestBody SysUser sysUser) {
         try {
             sysUserService.add(sysUser);
             return R.ok(Const.SuccessMsg.SysUser.ADD);
@@ -42,7 +44,7 @@ public class SysUserController {
     }
 
     @PostMapping("/setRole")
-    public R setRole(@RequestParam Long userName, @RequestParam Long roleId,
+    public R<Long> setRole(@RequestParam String userName, @RequestParam Long roleId,
                      @RequestParam String checkWho) {
         try {
             sysUserService.setRole(userName, roleId, checkWho);
