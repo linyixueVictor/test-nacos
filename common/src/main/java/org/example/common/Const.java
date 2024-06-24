@@ -19,10 +19,8 @@ public class Const {
             public static final String GET = "查询成功！";
             public static final String DESC_STOCK = "扣减库存成功！";
         }
-        public static class DocOrder {
-            public static final String GET = "查询成功！";
-            public static final String ADD = "新增成功！";
-            public static final String SHIP = "发运成功！";
+        public static class ShoppingCart {
+            public static final String ADD = "加入购物车成功！";
         }
     }
     public static class ErrorMsg {
@@ -39,21 +37,14 @@ public class Const {
             public static final String GET = "查询失败！";
             public static final String ADD = "新增角色失败！";
         }
-        public static class BizInventory {
-            public static final String NOT_ENOUGH = "库存不足！";
-            public static final String TOO_MANY_ROWS = "物料库存有误，请联系管理员！";
-            public static final String DEDUCT = "扣减库存失败！";
-        }
         public static class BasSku {
             public static final String NOT_EXIST = "物料号不存在！";
             public static final String NOT_ENOUGH = "库存不足！";
             public static final String GET = "查询失败！";
         }
-        public static class DocOrder {
-            public static final String NOT_EXIST = "订单号不存在！";
-            public static final String DETAILS_NOT_EXIST = "订单明细不存在！";
-            public static final String DETAILS_EMPTY = "订单无明细！";
-            public static final String MODE_ERROR = "发运模式有误！";
+        public static class ShoppingCart {
+            public static final String QTY_LEAST = "数量至少为1！";
+            public static final String NOT_EXISTS = "商品在购物车中不存在！";
         }
     }
 }

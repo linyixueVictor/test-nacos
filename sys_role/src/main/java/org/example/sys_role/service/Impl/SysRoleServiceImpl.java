@@ -1,5 +1,6 @@
 package org.example.sys_role.service.Impl;
 
+import org.example.common.AppHttpCodeEnum;
 import org.example.common.Const;
 import org.example.common.exception.CustomException;
 import org.example.sys_role.model.SysRole;
@@ -14,15 +15,9 @@ public class SysRoleServiceImpl implements SysRoleService {
     SysRoleMapper sysRoleMapper;
     @Override
     public SysRole getById(Long roleId) {
-        SysRole sysRole = null;
-        try {
-            sysRole = sysRoleMapper.getById(roleId);
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new CustomException(500, Const.ErrorMsg.SysRole.GET, e.getMessage());
-        }
+        SysRole sysRole = sysRoleMapper.getById(roleId);
         if (sysRole == null) {
-            throw new CustomException(500, Const.ErrorMsg.SysRole.NOT_EXIST);
+            throw new CustomException(AppHttpCodeEnum.ROLE_NOT_EXISTS);
         } else {
             return sysRole;
         }
@@ -32,13 +27,8 @@ public class SysRoleServiceImpl implements SysRoleService {
     public void add(SysRole sysRole) {
         SysRole sysRoleOld = sysRoleMapper.getById(sysRole.getRoleId());
         if (sysRoleOld != null) {
-            throw new CustomException(500, Const.ErrorMsg.SysRole.EXISTED);
+            throw new CustomException(AppHttpCodeEnum.ROLE_EXISTED);
         }
-        try {
-            sysRoleMapper.add(sysRole);
-        } catch (Exception e) {
-            throw new CustomException(500, Const.ErrorMsg.SysRole.ADD, e.getMessage());
-        }
-
+        sysRoleMapper.add(sysRole);
     }
 }

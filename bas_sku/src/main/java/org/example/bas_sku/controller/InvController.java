@@ -1,6 +1,7 @@
 package org.example.bas_sku.controller;
 
 import org.example.bas_sku.service.InvService;
+import org.example.common.AppHttpCodeEnum;
 import org.example.common.Const;
 import org.example.common.R;
 import org.example.common.exception.CustomException;
@@ -17,15 +18,7 @@ public class InvController {
     InvService service;
     @PostMapping("/descStock")
     public R<Long> descStock(@RequestParam String sku, @RequestParam Long qty) {
-        try {
-            service.descStock(sku, qty);
-            return R.ok(Const.SuccessMsg.BasSku.DESC_STOCK);
-        } catch (CustomException e) {
-            e.printStackTrace();
-            return R.fail(e.getCode(), e.getMsg());
-        } catch (Exception e) {
-            e.printStackTrace();
-            return R.error();
-        }
+        service.descStock(sku, qty);
+        return R.okResult(AppHttpCodeEnum.SUCCESS);
     }
 }

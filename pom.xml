@@ -30,9 +30,9 @@
 		<module>authcenter</module>
 		<module>bas_sku</module>
 		<module>common</module>
-		<module>doc_order</module>
 		<module>gateway</module>
 		<module>redis-common</module>
+		<module>shopping-cart</module>
 		<module>sys_role</module>
 		<module>sys_user</module>
 	</modules>

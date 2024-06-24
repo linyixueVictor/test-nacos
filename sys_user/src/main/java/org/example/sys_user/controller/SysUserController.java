@@ -1,5 +1,6 @@
 package org.example.sys_user.controller;
 
+import org.example.common.AppHttpCodeEnum;
 import org.example.common.Const;
 import org.example.common.exception.CustomException;
 import org.example.common.R;
@@ -17,44 +18,20 @@ public class SysUserController {
     SysUserService sysUserService;
     @PostMapping("/login")
     public R<Map<String, String>> login(@RequestParam String userName, @RequestParam String password) {
-        try {
-            Map<String, String> map = sysUserService.login(userName, password);
-            return R.ok(Const.SuccessMsg.SysUser.LOGIN, map);
-        } catch (CustomException e) {
-            e.printStackTrace();
-            return R.fail(e.getCode(), e.getMsg());
-        } catch (Exception e) {
-            e.printStackTrace();
-            return R.error();
-        }
+        Map<String, String> map = sysUserService.login(userName, password);
+        return R.okResult(AppHttpCodeEnum.SUCCESS_LOGIN, map);
     }
 
     @PostMapping("/register")
     public R<Long> add(@RequestBody SysUser sysUser) {
-        try {
-            sysUserService.add(sysUser);
-            return R.ok(Const.SuccessMsg.SysUser.ADD);
-        } catch (CustomException e) {
-            e.printStackTrace();
-            return R.fail(e.getCode(), e.getMsg());
-        } catch (Exception e) {
-            e.printStackTrace();
-            return R.error();
-        }
+        sysUserService.add(sysUser);
+        return R.okResult(AppHttpCodeEnum.SUCCESS_REGISTER);
     }
 
     @PostMapping("/setRole")
     public R<Long> setRole(@RequestParam String userName, @RequestParam Long roleId,
                      @RequestParam String checkWho) {
-        try {
-            sysUserService.setRole(userName, roleId, checkWho);
-            return R.ok(Const.SuccessMsg.SysUser.SET);
-        } catch (CustomException e) {
-            e.printStackTrace();
-            return R.fail(e.getCode(), e.getMsg());
-        } catch (Exception e) {
-            e.printStackTrace();
-            return R.error();
-        }
+        sysUserService.setRole(userName, roleId, checkWho);
+        return R.okResult(AppHttpCodeEnum.SUCCESS);
     }
 }

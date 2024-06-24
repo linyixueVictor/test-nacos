@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.example.shoppingcart.mapper.ShoppingCartMapper">
+    <select id="getList" resultType="org.example.shoppingcart.model.ShoppingCart">
+        select *
+        from shopping_cart
+        where userName = #{userName}
+        <if test="skuName != null">
+            and sku in (select sku
+                       from bas_sku
+                       where skuName like concat('%',#{skuName},'%'))
+        </if>
+    </select>
+    <insert id="addSku">
+        insert into shopping_cart
+            (userName, sku, qty)
+        values
+            (#{userName}, #{sku}, #{qty})
+    </insert>
+    <update id="updateQty">
+        update shopping_cart
+        set qty = #{qty}
+        where userName = #{userName}
+          and sku = #{sku}
+    </update>
+    <delete id="deleteSku">
+        delete from shopping_cart
+               where userName = #{userName}
+                 and sku = #{sku}
+    </delete>
+</mapper>

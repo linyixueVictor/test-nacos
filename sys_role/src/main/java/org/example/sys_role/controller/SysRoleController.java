@@ -1,5 +1,6 @@
 package org.example.sys_role.controller;
 
+import org.example.common.AppHttpCodeEnum;
 import org.example.common.Const;
 import org.example.common.exception.CustomException;
 import org.example.common.R;
@@ -15,30 +16,14 @@ public class SysRoleController {
     SysRoleService sysRoleService;
     @GetMapping("/getById/{roleId}")
     public R<SysRole> getById(@PathVariable Long roleId) {
-        try {
-            SysRole sysRole = sysRoleService.getById(roleId);
-            return R.ok(Const.SuccessMsg.SysUser.GET, sysRole);
-        } catch (CustomException e) {
-            e.printStackTrace();
-            return R.fail(e.getCode(), e.getMsg());
-        } catch (Exception e) {
-            e.printStackTrace();
-            return R.error();
-        }
+        SysRole sysRole = sysRoleService.getById(roleId);
+        return R.okResult(AppHttpCodeEnum.SUCCESS_GET, sysRole);
     }
 
     @PostMapping("/add")
     public R<Long> add(@RequestBody SysRole sysRole) {
-        try {
-            sysRoleService.add(sysRole);
-            return R.ok(Const.SuccessMsg.SysRole.ADD);
-        } catch (CustomException e) {
-            e.printStackTrace();
-            return R.fail(e.getCode(), e.getMsg());
-        } catch (Exception e) {
-            e.printStackTrace();
-            return R.error();
-        }
+        sysRoleService.add(sysRole);
+        return R.okResult(AppHttpCodeEnum.SUCCESS);
     }
 
 }

@@ -4,7 +4,8 @@ import com.alibaba.cloud.commons.lang.StringUtils;
 import com.alibaba.fastjson.JSON;
 import io.jsonwebtoken.Claims;
 import lombok.extern.slf4j.Slf4j;
-import org.example.gateway.exception.GateWayException;
+import org.example.common.AppHttpCodeEnum;
+import org.example.common.exception.CustomException;
 import org.example.gateway.properties.NotAuthUrlProperties;
 import org.example.gateway.utils.JwtUtils;
 import org.springframework.beans.factory.InitializingBean;
@@ -22,7 +23,6 @@ import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
 import java.security.PublicKey;
-import java.util.Map;
 
 /**
  * 认证过滤器,根据url判断用户请求是要经过认证 才能访问
@@ -68,8 +68,8 @@ public class AuthorizationFilter implements GlobalFilter,Ordered,InitializingBea
 
         //第二步:判断Authorization的请求头是否为空
         if(StringUtils.isEmpty(authHeader)) {
-            log.warn("需要认证的url,请求头为空");
-            throw new GateWayException(500, "需要认证的url请求头为空");
+            log.warn("TOKEN为空");
+            throw new CustomException(AppHttpCodeEnum.TOKEN_EMPTY);
         }
 
         //第三步 校验我们的jwt 若jwt不对或者超时都会抛出异常

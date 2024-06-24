@@ -15,19 +15,19 @@ public class R<T> {
         this.msg = msg;
     }
 
-    public static<T> R<T> error() {
-        return new R<T>(999, "系统异常，请联系管理员");
+    public static<T> R<T> errorResult(AppHttpCodeEnum enums){
+        return setAppHttpCodeEnum(enums.getCode(), enums.getMsg(), null);
     }
 
-    public static<T> R<T> fail(int code, String msg) {
-        return new R<T>(code, msg);
+    public static<T> R<T> okResult(AppHttpCodeEnum enums, T data){
+        return setAppHttpCodeEnum(enums.getCode(),enums.getMsg(), data);
     }
 
-    public static<T> R<T> ok(String msg) {
-        return new R<T>(200, msg);
+    public static<T> R<T> okResult(AppHttpCodeEnum enums){
+        return setAppHttpCodeEnum(enums.getCode(),enums.getMsg(), null);
     }
 
-    public static<T> R<T> ok(String msg, T data) {
-        return new R<T>(200, msg, data);
+    private static<T> R<T> setAppHttpCodeEnum(int code, String msg, T data){
+        return new R<T>(code, msg, data);
     }
 }

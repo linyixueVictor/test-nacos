@@ -4,7 +4,8 @@ import com.alibaba.cloud.commons.lang.StringUtils;
 import io.jsonwebtoken.*;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.binary.Base64;
-import org.example.gateway.exception.GateWayException;
+import org.example.common.AppHttpCodeEnum;
+import org.example.common.exception.CustomException;
 import org.springframework.http.*;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
@@ -52,7 +53,7 @@ public class JwtUtils {
      * @exception:
      * @date:2020/1/22 11:31
      */
-    private static String getTokenKeyByRemoteCall(RestTemplate restTemplate) throws GateWayException {
+    private static String getTokenKeyByRemoteCall(RestTemplate restTemplate) {
 
         //第一步:封装请求头
         HttpHeaders headers = new HttpHeaders();
@@ -75,7 +76,7 @@ public class JwtUtils {
 
             log.error("远程调用认证服务器获取Token_Key失败:{}",e.getMessage());
 
-            throw new GateWayException(500, "远程调用认证服务器获取Token_Key失败");
+            throw new CustomException(AppHttpCodeEnum.GET_TOKENKEY_ERROR);
         }
     }
 
@@ -87,7 +88,7 @@ public class JwtUtils {
      * @exception:
      * @date:2020/1/22 11:52
      */
-    public static PublicKey genPulicKey(RestTemplate restTemplate) throws GateWayException {
+    public static PublicKey genPulicKey(RestTemplate restTemplate) {
 
         String tokenKey = getTokenKeyByRemoteCall(restTemplate);
 
@@ -112,7 +113,7 @@ public class JwtUtils {
 
             log.info("生成公钥异常:{}",e.getMessage());
 
-            throw new GateWayException(500, "生成公钥异常");
+            throw new CustomException(AppHttpCodeEnum.GET_PUBLICKEY_ERROR);
         }
     }
 
@@ -126,10 +127,10 @@ public class JwtUtils {
             return claims;
         } catch (ExpiredJwtException e) {
             log.error("token:{}已过期,异常信息:{}",token,e.getMessage());
-            throw new GateWayException(500, "token已过期");
+            throw new CustomException(AppHttpCodeEnum.TOKEN_EXPIRE);
         } catch(Exception e) {
             log.error("校验token异常:{},异常信息:{}",token,e.getMessage());
-            throw new GateWayException(500, "校验token异常");
+            throw new CustomException(AppHttpCodeEnum.TOKEN_CHECK);
         }
     }
 }

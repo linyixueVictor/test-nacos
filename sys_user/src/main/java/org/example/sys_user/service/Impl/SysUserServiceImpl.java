@@ -1,6 +1,7 @@
 package org.example.sys_user.service.Impl;
 
 import lombok.extern.slf4j.Slf4j;
+import org.example.common.AppHttpCodeEnum;
 import org.example.common.Const;
 import org.example.common.exception.CustomException;
 import org.example.common.R;
@@ -45,7 +46,7 @@ public class SysUserServiceImpl implements SysUserService {
     public Map<String, String> login(String userName, String password) {
         TokenInfo tokenInfo = getToken(userName, password);
         if (tokenInfo == null) {
-            throw new CustomException(500, "用户名或密码错误！");
+            throw new CustomException(AppHttpCodeEnum.LOGIN_ERROR);
         }
         Map<String, String> tokenMap = new HashMap<>();
         tokenMap.put("token", tokenInfo.getAccess_token());
@@ -66,15 +67,10 @@ public class SysUserServiceImpl implements SysUserService {
     public void add(SysUser sysUser) {
         SysUser sysUserOld = mapper.getById(sysUser.getUserName());
         if (sysUserOld != null) {
-            throw new CustomException(500, Const.ErrorMsg.SysUser.EXISTED);
+            throw new CustomException(AppHttpCodeEnum.USER_EXISTED);
         }
         sysUser.setPassword(new BCryptPasswordEncoder().encode(sysUser.getPassword()));
-        try {
-            mapper.add(sysUser);
-        } catch (Exception e) {
-            throw new CustomException(500, Const.ErrorMsg.SysUser.ADD, e.getMessage());
-        }
-
+        mapper.add(sysUser);
     }
 
     @Override
@@ -84,13 +80,9 @@ public class SysUserServiceImpl implements SysUserService {
         if (result.getCode() != 200) {
             throw new CustomException(500, result.getMsg());
         }
-        try {
-            int rows = mapper.setRole(userName, roleId, checkWho);
-            if (rows == 0) {
-                throw new CustomException(500, Const.ErrorMsg.SysUser.NOT_EXIST);
-            }
-        } catch (Exception e) {
-            throw new CustomException(500, Const.ErrorMsg.SysUser.SET, e.getMessage());
+        int rows = mapper.setRole(userName, roleId, checkWho);
+        if (rows == 0) {
+            throw new CustomException(AppHttpCodeEnum.USER_NOT_EXISTS);
         }
     }
 
