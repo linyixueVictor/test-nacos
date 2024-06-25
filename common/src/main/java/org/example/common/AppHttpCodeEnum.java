@@ -15,6 +15,9 @@ public enum AppHttpCodeEnum {
     USER_EXISTED(1002, "用户已存在"),
     ROLE_NOT_EXISTS(1001, "角色不存在"),
     ROLE_EXISTED(1002, "角色已存在"),
+    SKU_NOT_EXISTS(1001, "商品不存在"),
+    QTY_LEAST(2001, "数量至少为1"),
+    CART_EMPTY(2002, "用户购物车为空"),
     ERROR(999, "系统异常，请联系管理员");
 
     int code;

@@ -39,6 +39,10 @@ spring:
           uri: lb://doc-order
           predicates:
             - Path=/order/**
+        - id: shopping_cart_route
+          uri: lb://shopping-cart
+          predicates:
+            - Path=/shopping-cart/**
 testnacos:
   gateway:
     shouldSkipUrls:

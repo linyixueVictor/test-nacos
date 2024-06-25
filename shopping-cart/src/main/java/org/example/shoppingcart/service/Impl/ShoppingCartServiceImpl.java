@@ -1,16 +1,23 @@
 package org.example.shoppingcart.service.Impl;
 
+import com.alibaba.cloud.commons.lang.StringUtils;
+import org.example.common.AppHttpCodeEnum;
 import org.example.common.Const;
 import org.example.common.exception.CustomException;
 import org.example.rediscommon.common.RedisPrefix;
 import org.example.rediscommon.util.RedisUtils;
 import org.example.shoppingcart.mapper.ShoppingCartMapper;
+import org.example.shoppingcart.model.BasSkuEntity;
 import org.example.shoppingcart.model.ShoppingCart;
 import org.example.shoppingcart.service.ShoppingCartService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.ScanOptions;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class ShoppingCartServiceImpl implements ShoppingCartService {
@@ -20,51 +27,62 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     ShoppingCartMapper mapper;
 
     @Override
-    public List<ShoppingCart> getList(String userName, String skuName) {
-        return mapper.getList(userName, skuName);
+    public Map<String, Integer> getList(String userName, String skuName) {
+        String key = RedisPrefix.CART_INFO+":"+userName;
+        Map<String, Integer> map = new HashMap<>();
+        if (skuName != null && !StringUtils.isBlank(skuName)) {
+            List<BasSkuEntity> skuList = mapper.getSkuList(skuName);
+            for (BasSkuEntity sku : skuList) {
+                Integer qty = redisUtils.getHashValue(key, sku.getSku());
+                if (qty != null) {
+                    map.put(sku.getSkuName(), qty);
+                }
+            }
+        } else {
+            for (Map.Entry<String, Integer> entry : redisUtils.getHash(key).entrySet()) {
+                map.put(mapper.getSkuName(entry.getKey()), entry.getValue());
+            }
+        }
+        return map;
     }
 
     @Override
     public long incrSku(String userName, String sku) {
-        mapper.
-        if (redisUtils.hasKey(key)) {
-            long value = redisUtils.incr(key);
-            mapper.updateQty(userName, sku, value);
-            return value;
+        String key = RedisPrefix.CART_INFO+":"+userName;
+        if (redisUtils.hasHashKey(key, sku)) {
+            return redisUtils.incrForHash(key, sku);
         } else {
-            redisUtils.set(key, 1);
-            mapper.addSku(userName, sku);
+            redisUtils.hSet(key, sku, 1);
             return 1;
         }
     }
 
     @Override
     public long decrSku(String userName, String sku) {
-        String key = RedisPrefix.CART_INFO+"."+userName+":"+sku;
-        String valueStr = redisUtils.get(key);
-        if (valueStr == null) {
-            throw new CustomException(500, Const.ErrorMsg.ShoppingCart.NOT_EXISTS);
+        String key = RedisPrefix.CART_INFO+":"+userName;
+        Integer qty = redisUtils.getHashValue(key, sku);
+        if (qty == null) {
+            throw new CustomException(AppHttpCodeEnum.SKU_NOT_EXISTS);
         }
-        long value = Long.parseLong(valueStr);
-        if (value == 1) {
-            throw new CustomException(500, Const.ErrorMsg.ShoppingCart.QTY_LEAST);
+        if (qty == 1) {
+            throw new CustomException(AppHttpCodeEnum.QTY_LEAST);
         }
-        value = redisUtils.decr(key);
-        mapper.updateQty(userName, sku, value);
-        return value;
+        return redisUtils.decrForHash(key, sku);
     }
 
     @Override
     public void delSku(String userName, String sku) {
-        String key = RedisPrefix.CART_INFO+"."+userName+":"+sku;
-        if (!redisUtils.delete(key)) {
-            throw new CustomException(500, Const.ErrorMsg.ShoppingCart.NOT_EXISTS);
+        String key = RedisPrefix.CART_INFO+":"+userName;
+        if (redisUtils.delHashKey(key, sku) == 0) {
+            throw new CustomException(AppHttpCodeEnum.SKU_NOT_EXISTS);
         }
-        mapper.deleteSku(userName, sku);
     }
 
     @Override
-    public long clear(String userName) {
-        return 0;
+    public void clear(String userName) {
+        String key = RedisPrefix.CART_INFO+":"+userName;
+        if (!redisUtils.delete(key)) {
+            throw new CustomException(AppHttpCodeEnum.CART_EMPTY);
+        }
     }
 }

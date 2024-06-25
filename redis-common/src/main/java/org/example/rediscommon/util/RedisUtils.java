@@ -4,9 +4,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ScanOptions;
 import org.springframework.util.CollectionUtils;
 
 import java.util.Collection;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 @Slf4j
@@ -22,6 +24,10 @@ public class RedisUtils {
 
     public void set(String key, Object value, long timeout, TimeUnit unit){
         redisTemplate.opsForValue().set(key,value,timeout,unit);
+    }
+
+    public void hSet(String key, Object hashKey, Object value) {
+        redisTemplate.opsForHash().put(key, hashKey, value);
     }
 
     public <V> void putListAllRight(String key, Collection<V> values){
@@ -46,6 +52,14 @@ public class RedisUtils {
                 .opsForValue().get(key);
     }
 
+    public Map<String, Integer> getHash(String key) {
+        return redisTemplate.opsForHash().entries(key);
+    }
+
+    public <T> T getHashValue(String key, Object hashKey) {
+        return (T) redisTemplate.opsForHash().get(key, hashKey);
+    }
+
     public Long decr(String key){
         return redisTemplate
                 .opsForValue().decrement(key);
@@ -54,6 +68,10 @@ public class RedisUtils {
     public Long decr(String key,long delta){
         return redisTemplate
                 .opsForValue().decrement(key,delta);
+    }
+
+    public Long decrForHash(String key, Object hashKey) {
+        return redisTemplate.opsForHash().increment(key, hashKey, -1);
     }
 
     public Long incr(String key){
@@ -66,6 +84,10 @@ public class RedisUtils {
                 .opsForValue().increment(key,delta);
     }
 
+    public Long incrForHash(String key, Object hashKey) {
+        return redisTemplate.opsForHash().increment(key, hashKey, 1);
+    }
+
     public boolean expire(String key,long timeout,TimeUnit unit){
         return redisTemplate.expire(key,timeout, unit);
     }
@@ -73,9 +95,15 @@ public class RedisUtils {
     public boolean delete(String key){
         return redisTemplate.delete(key);
     }
+    public Long delHashKey(String key, Object hashKey) {
+        return redisTemplate.opsForHash().delete(key, hashKey);
+    }
 
     public boolean hasKey(String key){
         return redisTemplate.hasKey(key);
+    }
+    public boolean hasHashKey(String key, Object hashKey) {
+        return redisTemplate.opsForHash().hasKey(key, hashKey);
     }
 
     /**

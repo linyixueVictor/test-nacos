@@ -1,15 +1,14 @@
 package org.example.shoppingcart.controller;
 
 import org.example.common.AppHttpCodeEnum;
-import org.example.common.Const;
 import org.example.common.R;
-import org.example.common.exception.CustomException;
 import org.example.shoppingcart.model.ShoppingCart;
 import org.example.shoppingcart.service.ShoppingCartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/shopping-cart")
@@ -18,10 +17,10 @@ public class ShoppingCartController {
     ShoppingCartService service;
 
     @GetMapping("/getList")
-    public R<List<ShoppingCart>> getList(@RequestParam String userName,
+    public R<Map> getList(@RequestParam String userName,
                                          @RequestParam(required = false) String skuName) {
-        List<ShoppingCart> list = service.getList(userName, skuName);
-        return R.okResult(AppHttpCodeEnum.SUCCESS_GET, list);
+        Map map = service.getList(userName, skuName);
+        return R.okResult(AppHttpCodeEnum.SUCCESS_GET, map);
     }
 
     @PostMapping("/incrSku")

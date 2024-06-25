@@ -3,11 +3,12 @@ package org.example.shoppingcart.service;
 import org.example.shoppingcart.model.ShoppingCart;
 
 import java.util.List;
+import java.util.Map;
 
 public interface ShoppingCartService {
-    List<ShoppingCart> getList(String userName, String skuName);
+    Map getList(String userName, String skuName);
     long incrSku(String userName, String sku);
     long decrSku(String userName, String sku);
     void delSku(String userName, String sku);
-    long clear(String userName);
+    void clear(String userName);
 }
