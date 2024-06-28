@@ -1,0 +1,64 @@
+#server:
+#  port: 8060
+#
+#spring:
+#  application:
+#    name: doc-order  #微服务名称
+#
+#  #配置nacos注册中心地址
+#  cloud:
+#    nacos:
+#      discovery:
+#        server-addr: 192.168.31.246:8848,192.168.31.246:8850,192.168.31.246:8852
+#        namespace: 59f707f4-1c65-406d-bc22-fe6802c5d54b
+#        #        group: tulingshop
+#        #        cluster-name: SH
+#        username: nacos
+#        password: nacos
+#
+#  #数据库配置
+#  datasource:
+#    type: com.alibaba.druid.pool.DruidDataSource
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#    url: jdbc:mysql://127.0.0.1:3306/test_sys?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+#    username: root
+#    password: root
+#    druid:
+#      initial-size: 10
+#      max-active: 100
+#      min-idle: 10
+#      max-wait: 60000
+#      pool-prepared-statements: true
+#      max-pool-prepared-statement-per-connection-size: 20
+#      time-between-eviction-runs-millis: 60000
+#      min-evictable-idle-time-millis: 300000
+#      test-while-idle: true
+#      test-on-borrow: false
+#      test-on-return: false
+#      stat-view-servlet:
+#        enabled: true
+#        url-pattern: /druid/*
+#      filter:
+#        stat:
+#          log-slow-sql: true
+#          slow-sql-millis: 1000
+#          merge-sql: false
+#        wall:
+#          config:
+#            multi-statement-allow: true
+#
+#
+#
+##mybatis的配置
+#mybatis:
+#  #开启驼峰命名法
+#  configuration:
+#    map-underscore-to-camel-case: true
+#
+#
+##暴露actuator端点
+#management:
+#  endpoints:
+#    web:
+#      exposure:
+#        include: '*'

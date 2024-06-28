@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.example.doc_order.mapper.DocOrderMapper">
+    <select id="getList" resultType="org.example.doc_order.module.DocOrderHeader">
+        select *
+        from doc_order_header doh
+        where userName = #{userName}
+        <if test="status != null">
+            and status = #{status}
+        </if>
+        <if test="keeperName != null">
+            and keeperId = (select keeperId
+                            from sys_user
+                            where nickName = #{keeperName})
+        </if>
+        <if test="skuName != null">
+            and exists(
+                select 1
+                from doc_order_details dod
+                where doh.orderNo = dod.orderNo
+                and skuName = #{skuName}
+            )
+        </if>
+    </select>
+    <select id="getInfo" resultType="org.example.doc_order.module.DocOrderHeader">
+        select *
+        from doc_order_header
+        where orderNo = #{orderNo}
+    </select>
+    <insert id="addHeader" parameterType="org.example.doc_order.module.DocOrderHeader">
+        <selectKey  keyProperty="orderNo" order="AFTER" resultType="java.lang.Integer">
+            select last_insert_id()
+        </selectKey>
+        insert into doc_order_header
+            (status, userName, keeperId, createTime)
+        values
+            (0, #{userName}, #{keeperId}, now())
+    </insert>
+    <insert id="addDetails" parameterType="org.example.doc_order.module.DocOrderDetails">
+        insert into doc_order_details
+            (orderNo, sku, qty, addWho, addTime)
+        values
+             (#{orderNo}, #{sku}, #{qty}, #{userName}, now())
+    </insert>
+    <update id="out">
+        update doc_order_header
+        set status = '1',
+            outTime = now()
+        where orderNo = #{orderNo}
+    </update>
+    <update id="received">
+        update doc_order_header
+        set status = '2',
+            outTime = now()
+        where orderNo = #{orderNo}
+    </update>
+    <update id="close">
+        update doc_order_header
+        set status = '3',
+            outTime = now()
+        where orderNo = #{orderNo}
+    </update>
+    <delete id="delete">
+        delete from doc_order_header
+        where orderNo = #{orderNo}
+    </delete>
+</mapper>

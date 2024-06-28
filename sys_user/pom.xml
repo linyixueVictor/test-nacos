@@ -7,10 +7,10 @@
         <artifactId>TestNacos</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
-    <artifactId>sys_user</artifactId>
+    <artifactId>sys-user</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>sys_user</name>
-    <description>sys_user</description>
+    <name>sys-user</name>
+    <description>sys-user</description>
     <properties>
         <java.version>1.8</java.version>
     </properties>
