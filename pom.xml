@@ -34,6 +34,7 @@
 		<module>gateway</module>
 		<module>redis-common</module>
 		<module>shopping-cart</module>
+		<module>sys_logs</module>
 		<module>sys_role</module>
 		<module>sys_user</module>
 	</modules>

@@ -2,7 +2,7 @@ package org.example.gateway.exception;
 
 import com.alibaba.fastjson.JSONObject;
 import lombok.extern.slf4j.Slf4j;
-import org.example.common.AppHttpCodeEnum;
+import org.example.common.consts.AppHttpCodeEnum;
 import org.example.common.R;
 import org.example.common.exception.CustomException;
 import org.springframework.boot.web.reactive.error.ErrorWebExceptionHandler;

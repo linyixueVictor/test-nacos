@@ -1,20 +1,16 @@
 package org.example.shoppingcart.service.Impl;
 
 import com.alibaba.cloud.commons.lang.StringUtils;
-import org.example.common.AppHttpCodeEnum;
-import org.example.common.Const;
+import org.example.common.consts.AppHttpCodeEnum;
 import org.example.common.exception.CustomException;
 import org.example.rediscommon.common.RedisPrefix;
 import org.example.rediscommon.util.RedisUtils;
 import org.example.shoppingcart.mapper.ShoppingCartMapper;
 import org.example.shoppingcart.model.BasSkuEntity;
-import org.example.shoppingcart.model.ShoppingCart;
 import org.example.shoppingcart.service.ShoppingCartService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.ScanOptions;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

@@ -1,7 +1,7 @@
 package org.example.common.exception;
 
 import lombok.Data;
-import org.example.common.AppHttpCodeEnum;
+import org.example.common.consts.AppHttpCodeEnum;
 
 @Data
 public class CustomException extends RuntimeException {
@@ -9,6 +9,7 @@ public class CustomException extends RuntimeException {
     String msg;
     private AppHttpCodeEnum appHttpCodeEnum;
     public CustomException(AppHttpCodeEnum appHttpCodeEnum) {
+        super(appHttpCodeEnum.getMsg());
         this.appHttpCodeEnum = appHttpCodeEnum;
     }
 

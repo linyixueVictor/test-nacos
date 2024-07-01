@@ -1,8 +1,6 @@
 package org.example.sys_user.controller;
 
-import org.example.common.AppHttpCodeEnum;
-import org.example.common.Const;
-import org.example.common.exception.CustomException;
+import org.example.common.consts.AppHttpCodeEnum;
 import org.example.common.R;
 import org.example.sys_user.model.SysUser;
 import org.example.sys_user.service.SysUserService;

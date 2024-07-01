@@ -1,13 +1,10 @@
 package org.example.shoppingcart.controller;
 
-import org.example.common.AppHttpCodeEnum;
 import org.example.common.R;
-import org.example.shoppingcart.model.ShoppingCart;
+import org.example.common.consts.AppHttpCodeEnum;
 import org.example.shoppingcart.service.ShoppingCartService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Map;
 
 @RestController

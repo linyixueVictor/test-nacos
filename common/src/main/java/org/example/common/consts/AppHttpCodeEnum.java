@@ -1,4 +1,4 @@
-package org.example.common;
+package org.example.common.consts;
 
 public enum AppHttpCodeEnum {
     SUCCESS(200,"操作成功"),
@@ -23,6 +23,7 @@ public enum AppHttpCodeEnum {
     SKU_NOT_EXISTS(1001, "商品不存在"),
     QTY_LEAST(2001, "数量至少为1"),
     CART_EMPTY(2002, "用户购物车为空"),
+    ORDER_NOT_EXISTS(1001, "订单不存在"),
     ERROR(999, "系统异常，请联系管理员");
 
     int code;

@@ -1,7 +1,6 @@
 package org.example.sys_role.service.Impl;
 
-import org.example.common.AppHttpCodeEnum;
-import org.example.common.Const;
+import org.example.common.consts.AppHttpCodeEnum;
 import org.example.common.exception.CustomException;
 import org.example.sys_role.model.SysRole;
 import org.example.sys_role.mapper.SysRoleMapper;

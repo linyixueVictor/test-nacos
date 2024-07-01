@@ -18,8 +18,8 @@ public interface DocOrderMapper {
     Long getOrderNoByKeeperId(String keeperId);
     void addHeader(DocOrderHeader header);
     void addDetails(DocOrderDetails details);
-    void out(Long orderNo);
-    void received(Long orderNo);
-    void close(Long orderNo);
-    void delete(Long orderNo);
+    int out(Long orderNo);
+    int received(Long orderNo);
+    int close(Long orderNo);
+    int delete(Long orderNo);
 }

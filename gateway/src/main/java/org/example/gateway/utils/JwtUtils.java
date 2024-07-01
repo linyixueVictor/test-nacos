@@ -4,7 +4,7 @@ import com.alibaba.cloud.commons.lang.StringUtils;
 import io.jsonwebtoken.*;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.binary.Base64;
-import org.example.common.AppHttpCodeEnum;
+import org.example.common.consts.AppHttpCodeEnum;
 import org.example.common.exception.CustomException;
 import org.springframework.http.*;
 import org.springframework.util.MultiValueMap;

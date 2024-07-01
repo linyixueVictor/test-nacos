@@ -1,8 +1,5 @@
 package org.example.shoppingcart.service;
 
-import org.example.shoppingcart.model.ShoppingCart;
-
-import java.util.List;
 import java.util.Map;
 
 public interface ShoppingCartService {

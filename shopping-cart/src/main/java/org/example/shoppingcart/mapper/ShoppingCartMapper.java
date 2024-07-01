@@ -3,7 +3,6 @@ package org.example.shoppingcart.mapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.example.shoppingcart.model.BasSkuEntity;
-import org.example.shoppingcart.model.ShoppingCart;
 
 import java.util.List;
 

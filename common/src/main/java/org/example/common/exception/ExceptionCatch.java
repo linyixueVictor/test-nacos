@@ -1,7 +1,7 @@
 package org.example.common.exception;
 
 import lombok.extern.slf4j.Slf4j;
-import org.example.common.AppHttpCodeEnum;
+import org.example.common.consts.AppHttpCodeEnum;
 import org.example.common.R;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -32,6 +32,7 @@ public class ExceptionCatch {
     @ExceptionHandler(CustomException.class)
     @ResponseBody
     public R exception(CustomException e){
+        e.printStackTrace();
         log.error("catch exception:{}",e);
         return R.errorResult(e.getAppHttpCodeEnum());
     }

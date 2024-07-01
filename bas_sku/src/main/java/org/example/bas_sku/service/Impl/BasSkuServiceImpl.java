@@ -3,7 +3,7 @@ package org.example.bas_sku.service.Impl;
 import org.example.bas_sku.mapper.BasSkuMapper;
 import org.example.bas_sku.model.BasSkuEntity;
 import org.example.bas_sku.service.BasSkuService;
-import org.example.common.Const;
+import org.example.common.ConstA;
 import org.example.common.exception.CustomException;
 import org.example.rediscommon.common.RedisPrefix;
 import org.example.rediscommon.util.RedisUtils;
@@ -25,7 +25,7 @@ public class BasSkuServiceImpl implements BasSkuService {
         if (entity == null) {
             entity = mapper.getById(sku);
             if (entity == null) {
-                throw new CustomException(500, Const.ErrorMsg.BasSku.NOT_EXIST);
+                throw new CustomException(500, ConstA.ErrorMsg.BasSku.NOT_EXIST);
             }
             redisUtils.set(redisSkuKey, entity, 60*60, TimeUnit.SECONDS);
         } else {

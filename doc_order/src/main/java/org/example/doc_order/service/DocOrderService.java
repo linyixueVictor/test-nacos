@@ -6,10 +6,10 @@ import java.util.List;
 
 public interface DocOrderService {
     List<DocOrderHeader> getList(String userName, Integer status, String skuName, String keeperName);
-    DocOrderHeader getInfo(Long orderNo);
+    DocOrderHeader getInfo(Long orderNo, String userName);
     void generateOrder(String userName, String skus);
-    void out(Long orderNo);
-    void received(Long orderNo);
-    void close(Long orderNo);
-    void delete(Long orderNo);
+    void out(Long orderNo, String userName);
+    void received(Long orderNo, String userName);
+    void close(Long orderNo, String userName);
+    void delete(Long orderNo, String userName);
 }

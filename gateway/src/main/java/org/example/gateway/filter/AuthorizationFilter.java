@@ -4,7 +4,7 @@ import com.alibaba.cloud.commons.lang.StringUtils;
 import com.alibaba.fastjson.JSON;
 import io.jsonwebtoken.Claims;
 import lombok.extern.slf4j.Slf4j;
-import org.example.common.AppHttpCodeEnum;
+import org.example.common.consts.AppHttpCodeEnum;
 import org.example.common.exception.CustomException;
 import org.example.gateway.properties.NotAuthUrlProperties;
 import org.example.gateway.utils.JwtUtils;

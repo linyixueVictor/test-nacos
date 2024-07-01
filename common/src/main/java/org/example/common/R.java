@@ -2,6 +2,7 @@ package org.example.common;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import org.example.common.consts.AppHttpCodeEnum;
 
 @Data
 @AllArgsConstructor

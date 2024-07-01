@@ -1,6 +1,6 @@
 package org.example.doc_order.controller;
 
-import org.example.common.AppHttpCodeEnum;
+import org.example.common.consts.AppHttpCodeEnum;
 import org.example.common.R;
 import org.example.doc_order.module.DocOrderHeader;
 import org.example.doc_order.service.DocOrderService;
@@ -24,8 +24,8 @@ public class DocOrderController {
     }
 
     @GetMapping("/getInfo")
-    public R<DocOrderHeader> getInfo(@RequestParam Long orderNo) {
-        DocOrderHeader header = service.getInfo(orderNo);
+    public R<DocOrderHeader> getInfo(@RequestParam Long orderNo, @RequestParam String userName) {
+        DocOrderHeader header = service.getInfo(orderNo, userName);
         return R.okResult(AppHttpCodeEnum.SUCCESS_GET, header);
     }
 
@@ -36,26 +36,26 @@ public class DocOrderController {
     }
 
     @PostMapping("/out")
-    public R<Long> out(@RequestParam Long orderNo) {
-        service.out(orderNo);
+    public R<Long> out(@RequestParam Long orderNo, @RequestParam String userName) {
+        service.out(orderNo, userName);
         return R.okResult(AppHttpCodeEnum.SUCCESS_OUT);
     }
 
     @PostMapping("/received")
-    public R<Long> received(@RequestParam Long orderNo) {
-        service.received(orderNo);
+    public R<Long> received(@RequestParam Long orderNo, @RequestParam String userName) {
+        service.received(orderNo, userName);
         return R.okResult(AppHttpCodeEnum.SUCCESS_RECEIVED);
     }
 
     @PostMapping("/close")
-    public R<Long> close(@RequestParam Long orderNo) {
-        service.close(orderNo);
+    public R<Long> close(@RequestParam Long orderNo, @RequestParam String userName) {
+        service.close(orderNo, userName);
         return R.okResult(AppHttpCodeEnum.SUCCESS_CLOSE);
     }
 
     @PostMapping("/delete")
-    public R<Long> delete(@RequestParam Long orderNo) {
-        service.delete(orderNo);
+    public R<Long> delete(@RequestParam Long orderNo, @RequestParam String userName) {
+        service.delete(orderNo, userName);
         return R.okResult(AppHttpCodeEnum.SUCCESS_DELETE);
     }
 }
